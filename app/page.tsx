@@ -91,8 +91,14 @@ const Home = () => {
   return (
     <main className="bg-neutral-900	font-sans relative">
       <div className="shadow-lg fixed z-[1000] right-30 bottom-10 p-2 bg-white rounded-md border-2 border-solid border-indigo-500 flex items-center">
-        <a href="#" title="view resume" className="font-bold pe-2 border-1 border-white border-r-gray-200 hover:text-blue-800 duration-300 transition-colors">My resume</a>
-        <a href="#" title="donwload" className="text-lg ps-2 hover:text-green-800 duration-300 transition-colors"><BsDownload /></a>
+        <a
+          href="/Papinwit-Resume.pdf"
+          rel="noopener noreferrer"
+          target="_blank"
+          title="view resume"
+          className="font-bold pe-2 border-1 border-white border-r-gray-200 hover:text-blue-800 duration-300 transition-colors"
+        >My Resume</a>
+        <a href="/Papinwit-Resume.pdf" download title="donwload" className="text-lg ps-2 hover:text-green-800 duration-300 transition-colors"><BsDownload /></a>
       </div>
       <div className="sticky top-0 z-50 backdrop-blur-md py-3 border-b-[0.125rem] border-blue-800">
         <div className="mx-auto max-w-6xl grid md:grid-cols-2 gap-6 py-3">
