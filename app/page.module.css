@@ -1,0 +1,9 @@
+/* app/page.module.css */
+.main {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+h1 {
+  color: #0070f3;
+}
