@@ -45,31 +45,31 @@ const AboutMeSection = () => {
                     <p>About</p>
                 </div>
                 <div className='grid grid-cols-4 gap-6 mt-5'>
-                    <div className='md:h-64 md:w-64 bg-blue-900 p-2'>
-                        <p>Fullname</p>
+                    <div className='md:h-64 md:w-64 bg-blue-900 p-2 shadow-sm'>
+                        <p className='font-bold'>Fullname</p>
                     </div>
-                    <div className='md:h-64 md:w-64 bg-blue-900 p-2'>
-                        <p>Age</p>
+                    <div className='md:h-64 md:w-64 bg-blue-900 p-2 shadow-sm'>
+                        <p className='font-bold'>Age</p>
                     </div>
-                    <div className='md:h-64 md:w-64 bg-blue-900 p-2'>
-                        <p>Nation</p>
+                    <div className='md:h-64 md:w-64 bg-blue-900 p-2 shadow-sm'>
+                        <p className='font-bold'>Nation</p>
                     </div>
-                    <div className='md:h-64 md:w-64 bg-neutral-900 p-2'>
+                    <div className='md:h-64 md:w-64 bg-neutral-900 p-2 shadow-sm'>
                         {/* <p>Fullname</p> */}
                     </div>
                 </div>
                 <div className='grid grid-cols-4 gap-6 mt-[2em]'>
-                    <div className='md:h-64 md:w-64 bg-neutral-900 p-2'>
+                    <div className='md:h-64 md:w-64 bg-neutral-900 p-2 shadow-sm'>
                         {/* <p>Fullname</p> */}
                     </div>
-                    <div className='md:h-64 md:w-64 bg-blue-900 p-2'>
-                        <p>Age</p>
+                    <div className='md:h-64 md:w-64 bg-blue-900 p-2 shadow-sm'>
+                        <p className='font-bold'>Age</p>
                     </div>
-                    <div className='md:h-64 md:w-64 bg-blue-900 p-2'>
-                        <p>Nation</p>
+                    <div className='md:h-64 md:w-64 bg-blue-900 p-2 shadow-sm'>
+                        <p className='font-bold'>Nation</p>
                     </div>
-                    <div className='md:h-64 md:w-64 bg-blue-900 p-2'>
-                        <p>Fullname</p>
+                    <div className='md:h-64 md:w-64 bg-blue-900 p-2 shadow-sm'>
+                        <p className='font-bold'>Fullname</p>
                     </div>
                 </div>
             </section>
