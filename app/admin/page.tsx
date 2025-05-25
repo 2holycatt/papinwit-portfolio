@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 // import { Input, Accordion, AccordionItem } from "@heroui/react";
-import { Flex, Avatar } from "@radix-ui/themes";
+// import { Flex, Avatar } from "@radix-ui/themes";
 import { TextField } from '@mui/material';
 import FileUpload from '@/components/FileUpload';
 
@@ -33,15 +33,15 @@ export default function AdminPage() {
         }
     );
 
-    const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+    // const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
 
-    function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const files = event.target.files;
-        if (files !== null) {
-            setSelectedFiles(files);
-        }
+    // function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    //     const files = event.target.files;
+    //     if (files !== null) {
+    //         setSelectedFiles(files);
+    //     }
 
-    }
+    // }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         // e.preventDefault();
         try {
