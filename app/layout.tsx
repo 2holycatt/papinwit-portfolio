@@ -7,6 +7,9 @@ import '../styles/scrollIndicator.css';
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
 // });
+import 'devicon/devicon.min.css';
+// import { Theme } from "@radix-ui/themes";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 // const iceberg = Iceberg({
 //   weight: '400',
@@ -47,7 +50,9 @@ export default function RootLayout({
         />
       </Head>
       <body className={`${inter.className} font-sans antialiased`}>
-        {children}
+        <AppRouterCacheProvider>
+          {children}
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
