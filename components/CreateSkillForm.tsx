@@ -633,7 +633,13 @@ const CreateSkillForm: React.FC<UserSkillProps> = ({ skill }) => {
               </div>
             </Box>
           </Box>
-
+          <Button
+            type="submit"
+            variant="contained"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            Save
+          </Button>
         </Box>
       </div>
     </>
