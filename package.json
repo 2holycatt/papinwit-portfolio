@@ -57,6 +57,7 @@
     "@types/datatables.net": "^1.12.3",
     "@types/dropzone": "^5.7.9",
     "@types/jquery": "^3.5.32",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/lodash": "^4.17.17",
     "@types/node": "^20",
     "@types/nouislider": "^15.0.0",
