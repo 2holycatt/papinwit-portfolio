@@ -58,7 +58,7 @@ export async function POST(req: Request) {
             path: '/',
             maxAge: 60 * 60 * 24,
             sameSite: 'lax', // 👈 สำคัญมาก
-            // secure: process.env.NODE_ENV === 'production', // 👈 ถ้าเป็น prod ต้องเปิด secure
+            secure: process.env.NODE_ENV === 'production', // ถ้าเป็น prod ต้องเปิด secure
         });
 
         return response;
