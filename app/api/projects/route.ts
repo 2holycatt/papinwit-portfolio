@@ -1,7 +1,7 @@
 import { uploadSingleFileToS3 } from "@/lib/services/AwsS3BucketImageUpload";
 import { ProjectModel } from "@/models/Project";
 import { UserModel } from "@/models/User";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
         const projectData = {
             ...data,
             images: imageKeys,
-            user: new mongoose.Types.ObjectId(data.userId), // Assuming userId is passed in the formData
+            user: data.userId, // Assuming userId is passed in the formData
         };
         const createdProject = await ProjectModel.create(projectData);
 

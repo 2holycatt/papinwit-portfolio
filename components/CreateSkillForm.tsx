@@ -3,6 +3,7 @@ import { Box, Button, Chip, TextField, Typography } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import Select from 'react-select';
 import CloseIcon from '@mui/icons-material/Close';
+import { toast } from 'react-toastify';
 
 type CareerOption = {
   value: string;
@@ -27,14 +28,10 @@ const careerOptions: CareerOption[] = [
 // const mockExistingSkillsFm: string[] = [];
 type UserSkillProps = {
   skill: SkillPlain[];
+  userId: string;
 };
-const CreateSkillForm: React.FC<UserSkillProps> = ({ skill }) => {
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // Handle form submission logic here
-    console.log("Form submitted")
-  }
+const CreateSkillForm: React.FC<UserSkillProps> = ({ skill, userId }) => {
 
   const [careerType, setCareerType] = useState<CareerOption | null>(careerOptions[0]);
   // const [languague, setLanguague] = useState<string[]>([]);
@@ -90,11 +87,11 @@ const CreateSkillForm: React.FC<UserSkillProps> = ({ skill }) => {
       )
       if (filtered) {
         setSkills({
-          language: filtered.Languague || [],
-          framework: filtered.Framework || [],
-          cloudDB: filtered.CloudDB || [],
-          tool: filtered.Tool || [],
-          other: filtered.Other || [],
+          language: filtered.language || [],
+          framework: filtered.framework || [],
+          cloudDB: filtered.cloudDB || [],
+          tool: filtered.tool || [],
+          other: filtered.other || [],
         })
       } else {
         setSkills({
@@ -116,6 +113,57 @@ const CreateSkillForm: React.FC<UserSkillProps> = ({ skill }) => {
     // setTool(filteredSkills?.Tool || []);
     // setOther(filteredSkills?.Other || []);
   }, [careerType, skill]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+
+    // Handle form submission logic here
+    // console.log('Form Data: ', formData)
+    try {
+      // console.log(careerType, skills, userId);
+      const formData = new FormData();
+      formData.append('userId', userId);
+      formData.append('careerType', careerType?.label || '');
+      formData.append('abbreviation', careerType?.value || '');
+      skills.language.forEach(lang => formData.append('language', lang));
+      skills.framework.forEach(frame => formData.append('framework', frame));
+      skills.cloudDB.forEach(cd => formData.append('cloudDB', cd));
+      skills.tool.forEach(t => formData.append('tool', t));
+      skills.other.forEach(o => formData.append('other', o))
+      // formData.append('note', note || '');
+
+      const res = await fetch('/api/skills', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await res.json();
+
+      if (result.ok) {
+        toast.success('request for add skill: OK!', {
+          autoClose: 5000,
+          hideProgressBar: false,
+          // closeOnClick: true,
+          // pauseOnHover: true,
+          draggable: true,
+          theme: "light", // "light" | "dark" | "colored"
+        });
+      } else {
+        toast.error(result.messag, {
+          autoClose: 5000,
+          hideProgressBar: true,
+          // closeOnClick: true,
+          // pauseOnHover: true,
+          draggable: true,
+          theme: "light",
+        });
+      }
+
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   return (
     <>

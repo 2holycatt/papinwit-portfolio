@@ -4,11 +4,11 @@ export interface ISkill extends Document {
     user: mongoose.Schema.Types.ObjectId;
     careerCategory: string;
     abbreviation: string;
-    Languague?: string[];
-    Framework?: string[];
-    CloudDB?: string[];
-    Tool?: string[];
-    Other?: string[];
+    language?: string[];
+    framework?: string[];
+    cloudDB?: string[];
+    tool?: string[];
+    other?: string[];
     note?: string;
     // methods
     getPreDetail(): string;
@@ -18,11 +18,11 @@ const SkillSchema: Schema<ISkill> = new Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     careerCategory: { type: String , required: true },
     abbreviation: { type: String, unique: true, required: true },
-    Languague: { type: [String]},
-    Framework: { type: [String] },
-    CloudDB: { type: [String] },
-    Tool: { type: [String] },
-    Other: { type: [String] },
+    language: { type: [String]},
+    framework: { type: [String] },
+    cloudDB: { type: [String] },
+    tool: { type: [String] },
+    other: { type: [String] },
     note: { type: String }
 }, { timestamps: true });
 

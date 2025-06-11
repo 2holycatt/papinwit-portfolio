@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 // import { Input, Accordion, AccordionItem } from "@heroui/react";
 // import { Flex, Avatar } from "@radix-ui/themes";
-import { Box, TextField, Button, FormControl, Divider, Accordion, AccordionSummary, Typography, AccordionDetails, Chip } from '@mui/material';
+import { Box, TextField, Button, FormControl, Divider, Accordion, AccordionSummary, Typography, AccordionDetails, Chip, Card, List, ListItem, ListItemText, } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaGithub, FaUserCircle } from "react-icons/fa";
@@ -32,6 +32,9 @@ import LoadingIndicator from '@/components/LoadingAnimation';
 import CreateProjectForm from '@/components/CreateProjectForm';
 import { IProject } from '@/models/Project';
 import CreateSkillForm from '@/components/CreateSkillForm';
+// import { ISkill } from '@/models/Skill';
+import { SkillPlain } from '@/types/skill';
+import CreateExperienceForm from '@/components/CreateExperienceForm';
 // import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 
@@ -91,85 +94,122 @@ import CreateSkillForm from '@/components/CreateSkillForm';
 //     }
 // ];
 
-const skillCategories = [
+// const skillCategories = [
+//     {
+//         category: "Software Development",
+//         skills: {
+//             Language: ["JavaScript", "TypeScript"],
+//             Framework: ["React", "Express"],
+//             Tools: ["Git", "Docker"],
+//             Other: ["Agile", "Scrum"]
+//         }
+//     },
+//     {
+//         category: "Data Science",
+//         skills: {
+//             Language: ["Python", "R"],
+//             Framework: ["Pandas", "scikit-learn"],
+//             Tools: ["Jupyter", "TensorFlow"],
+//             Other: ["EDA", "ML Workflow"]
+//         }
+//     },
+//     {
+//         category: "DevSecOps",
+//         skills: {
+//             Tools: ["SonarQube", "OWASP ZAP"],
+//             Other: ["Security Review", "Threat Modeling"]
+//         }
+//     }
+// ]
+
+const fakeExperiences = [
     {
-        category: "Software Development",
-        skills: {
-            Language: ["JavaScript", "TypeScript"],
-            Framework: ["React", "Express"],
-            Tools: ["Git", "Docker"],
-            Other: ["Agile", "Scrum"]
-        }
+        user: '665f1a1c2f7d4b3c9f8e1234',
+        title: 'Software Engineer',
+        company: 'Tech Solutions Co., Ltd.',
+        posotion: 'Backend Developer',
+        location: 'Bangkok, Thailand',
+        startDate: new Date('2020-01-15'),
+        endDate: new Date('2021-06-30'),
+        description: 'Developed and maintained RESTful APIs using Node.js and MongoDB.',
+        duration: 17, // months
     },
     {
-        category: "Data Science",
-        skills: {
-            Language: ["Python", "R"],
-            Framework: ["Pandas", "scikit-learn"],
-            Tools: ["Jupyter", "TensorFlow"],
-            Other: ["EDA", "ML Workflow"]
-        }
+        user: '665f1a1c2f7d4b3c9f8e1234',
+        title: 'Full Stack Developer',
+        company: 'Innova Labs',
+        posotion: 'Full Stack Engineer',
+        location: 'Chiang Mai, Thailand',
+        startDate: new Date('2021-07-01'),
+        endDate: new Date('2023-03-01'),
+        description: 'Worked on both frontend and backend using React and Express.',
+        duration: 20, // months
     },
     {
-        category: "DevSecOps",
-        skills: {
-            Tools: ["SonarQube", "OWASP ZAP"],
-            Other: ["Security Review", "Threat Modeling"]
-        }
+        user: '665f1a1c2f7d4b3c9f8e1234',
+        title: 'Tech Lead',
+        company: 'FutureTech Ventures',
+        posotion: 'Lead Developer',
+        location: 'Remote',
+        startDate: new Date('2023-04-01'),
+        endDate: new Date('2024-12-01'),
+        description: 'Leading a team of developers to build scalable SaaS platforms.',
+        duration: 20, // months
     }
-]
+];
+
 interface AddUser {
     fname: string;
     lname: string;
 }
 
-const mockSkillsFromApi = [
-    {
-        _id: "665f98f4a2d2e4dabc000001",
-        user: "665f98c2a2d2e4dabc111111",
-        careerCategory: "Software Development",
-        abbreviation: "sd",
-        Languague: ["JavaScript", "TypeScript"],
-        Framework: ["React", "Node.js"],
-        CloudDB: ["MongoDB", "Firebase"],
-        Tool: ["VSCode", "Postman"],
-        Other: ["Agile", "Scrum"],
-        note: "Experienced in MERN stack development.",
-        createdAt: "2025-06-05T10:00:00.000Z",
-        updatedAt: "2025-06-05T12:00:00.000Z",
-        __v: 0
-    },
-    {
-        _id: "665f98f4a2d2e4dabc000002",
-        user: "665f98c2a2d2e4dabc222222",
-        careerCategory: "Data Engineer",
-        abbreviation: "de",
-        Languague: ["HTML", "CSS", "JavaScript"],
-        Framework: ["React", "Next.js"],
-        CloudDB: ["Firebase"],
-        Tool: ["Figma", "Chrome DevTools"],
-        Other: ["UI/UX"],
-        note: "Focus on modern UI frameworks and performance.",
-        createdAt: "2025-06-04T09:30:00.000Z",
-        updatedAt: "2025-06-04T11:00:00.000Z",
-        __v: 0
-    },
-    {
-        _id: "665f98f4a2d2e4dabc000003",
-        user: "665f98c2a2d2e4dabc333333",
-        careerCategory: "Data Science",
-        abbreviation: "ds",
-        Languague: ["Python", "Go"],
-        Framework: ["Django", "Express"],
-        CloudDB: ["PostgreSQL", "MongoDB"],
-        Tool: ["Docker", "Postman"],
-        Other: ["REST API", "CI/CD"],
-        note: "Skilled in scalable backend systems.",
-        createdAt: "2025-06-03T08:00:00.000Z",
-        updatedAt: "2025-06-03T08:45:00.000Z",
-        __v: 0
-    }
-];
+// const mockSkillsFromApi = [
+//     {
+//         _id: "665f98f4a2d2e4dabc000001",
+//         user: "665f98c2a2d2e4dabc111111",
+//         careerCategory: "Software Development",
+//         abbreviation: "sd",
+//         Languague: ["JavaScript", "TypeScript"],
+//         Framework: ["React", "Node.js"],
+//         CloudDB: ["MongoDB", "Firebase"],
+//         Tool: ["VSCode", "Postman"],
+//         Other: ["Agile", "Scrum"],
+//         note: "Experienced in MERN stack development.",
+//         createdAt: "2025-06-05T10:00:00.000Z",
+//         updatedAt: "2025-06-05T12:00:00.000Z",
+//         __v: 0
+//     },
+//     {
+//         _id: "665f98f4a2d2e4dabc000002",
+//         user: "665f98c2a2d2e4dabc222222",
+//         careerCategory: "Data Engineer",
+//         abbreviation: "de",
+//         Languague: ["HTML", "CSS", "JavaScript"],
+//         Framework: ["React", "Next.js"],
+//         CloudDB: ["Firebase"],
+//         Tool: ["Figma", "Chrome DevTools"],
+//         Other: ["UI/UX"],
+//         note: "Focus on modern UI frameworks and performance.",
+//         createdAt: "2025-06-04T09:30:00.000Z",
+//         updatedAt: "2025-06-04T11:00:00.000Z",
+//         __v: 0
+//     },
+//     {
+//         _id: "665f98f4a2d2e4dabc000003",
+//         user: "665f98c2a2d2e4dabc333333",
+//         careerCategory: "Data Science",
+//         abbreviation: "ds",
+//         Languague: ["Python", "Go"],
+//         Framework: ["Django", "Express"],
+//         CloudDB: ["PostgreSQL", "MongoDB"],
+//         Tool: ["Docker", "Postman"],
+//         Other: ["REST API", "CI/CD"],
+//         note: "Skilled in scalable backend systems.",
+//         createdAt: "2025-06-03T08:00:00.000Z",
+//         updatedAt: "2025-06-03T08:45:00.000Z",
+//         __v: 0
+//     }
+// ];
 
 
 
@@ -198,6 +238,9 @@ export default function AdminPage() {
         value: String(user._id), // Assuming _id is a string
         label: `${user.fname} ${user.lname}`,
     }));
+
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const selectedExp = fakeExperiences[selectedIndex];
 
     // const [selectedOption, setSelectedOption] = useState(options[0]);
 
@@ -229,7 +272,7 @@ export default function AdminPage() {
     const [selectedProject, setSelectedProject] = useState<{ value: string; label: string } | null>(null);
 
     const [userProjects, setUserProjects] = useState<IProject[]>([]);
-    const [userSkill, setUserSkill] = useState<string[]>([]);
+    const [userSkill, setUserSkill] = useState<SkillPlain[]>([]);
 
     const projectOptions = userProjects.map((project: IProject) => ({
         value: String(project._id),
@@ -267,11 +310,14 @@ export default function AdminPage() {
 
     }, [selectedUser]);
 
+
     useEffect(() => {
         // get all user
         fetchData();
-        console.log('userProjects:', userProjects);
-    }, [userProjects]);
+        // console.log('userProjects:', userProjects);
+        console.log('userSkill:', userSkill);
+
+    }, [userSkill]);
 
     useEffect(() => {
         // get all user
@@ -596,24 +642,65 @@ export default function AdminPage() {
                                                                         <div className="mb-5 text-zinc-400 italic">
                                                                             {/* This user has no skills yet. Please create and add new skill. */}
                                                                             <Box sx={{ width: '100%' }}>
-                                                                                {skillCategories.map(({ category, skills }) => (
-                                                                                    <Accordion key={category}>
+                                                                                {userSkill.map((skill) => (
+                                                                                    // <p key={i}>
+                                                                                    //     {skill.careerCategory}
+                                                                                    // </p>
+                                                                                    <Accordion key={skill.abbreviation}>
                                                                                         <AccordionSummary expandIcon={<FaChevronDown />}>
-                                                                                            <Typography variant="h6">{category}</Typography>
+                                                                                            <Typography variant="h6">{skill.careerCategory}</Typography>
                                                                                         </AccordionSummary>
                                                                                         <AccordionDetails>
-                                                                                            {Object.entries(skills).map(([type, items]) => (
-                                                                                                <Box key={type} sx={{ mb: 2 }}>
-                                                                                                    <Typography variant="subtitle2" color="text.secondary">
-                                                                                                        {type}
-                                                                                                    </Typography>
-                                                                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
-                                                                                                        {items.map((skill: string) => (
-                                                                                                            <Chip key={skill} label={skill} color="primary" variant="outlined" />
-                                                                                                        ))}
-                                                                                                    </Box>
+                                                                                            <Box sx={{ mb: 2 }}>
+                                                                                                <Typography variant="subtitle2" color="text.secondary">
+                                                                                                    Language
+                                                                                                </Typography>
+                                                                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
+                                                                                                    {skill.language?.map((skl: string) => (
+                                                                                                        <Chip key={skl} label={skl} color="primary" variant="outlined" />
+                                                                                                    ))}
                                                                                                 </Box>
-                                                                                            ))}
+                                                                                            </Box>
+                                                                                            <Box sx={{ mb: 2 }}>
+                                                                                                <Typography variant="subtitle2" color="text.secondary">
+                                                                                                    Framework
+                                                                                                </Typography>
+                                                                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
+                                                                                                    {skill.framework?.map((skl: string) => (
+                                                                                                        <Chip key={skl} label={skl} color="primary" variant="outlined" />
+                                                                                                    ))}
+                                                                                                </Box>
+                                                                                            </Box>
+                                                                                            <Box sx={{ mb: 2 }}>
+                                                                                                <Typography variant="subtitle2" color="text.secondary">
+                                                                                                    Cloud/DB
+                                                                                                </Typography>
+                                                                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
+                                                                                                    {skill.cloudDB?.map((skl: string) => (
+                                                                                                        <Chip key={skl} label={skl} color="primary" variant="outlined" />
+                                                                                                    ))}
+                                                                                                </Box>
+                                                                                            </Box>
+                                                                                            <Box sx={{ mb: 2 }}>
+                                                                                                <Typography variant="subtitle2" color="text.secondary">
+                                                                                                    Tools
+                                                                                                </Typography>
+                                                                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
+                                                                                                    {skill.tool?.map((skl: string) => (
+                                                                                                        <Chip key={skl} label={skl} color="primary" variant="outlined" />
+                                                                                                    ))}
+                                                                                                </Box>
+                                                                                            </Box>
+                                                                                            <Box sx={{ mb: 2 }}>
+                                                                                                <Typography variant="subtitle2" color="text.secondary">
+                                                                                                    Other
+                                                                                                </Typography>
+                                                                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
+                                                                                                    {skill.other?.map((skl: string) => (
+                                                                                                        <Chip key={skl} label={skl} color="primary" variant="outlined" />
+                                                                                                    ))}
+                                                                                                </Box>
+                                                                                            </Box>
                                                                                         </AccordionDetails>
                                                                                     </Accordion>
                                                                                 ))}
@@ -629,8 +716,54 @@ export default function AdminPage() {
                                                                 )
                                                             }
                                                             <Divider />
-                                                            <CreateSkillForm skill={mockSkillsFromApi}/>
+                                                            <CreateSkillForm skill={userSkill} userId={selectedUser.value} />
                                                         </div>
+                                                    </TabPanel>
+                                                    <TabPanel value={2} sx={{ p: 3, borderRadius: 'md', boxShadow: 'sm', bgcolor: 'white' }}>
+                                                        <div className="flex flex-col md:flex-row gap-6 mb-5">
+                                                            <div className="w-full md:w-1/3">
+                                                                <List className="bg-white rounded-sm shadow-md" sx={{p:0}}>
+                                                                    {fakeExperiences.map((exp, index) => (
+                                                                        <ListItem
+                                                                            key={index}
+                                                                            component="div"
+                                                                            onClick={() => setSelectedIndex(index)}
+                                                                            className={`cursor-pointer transition-all duration-200 rounded-sm ${selectedIndex === index ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
+                                                                        >
+                                                                            <ListItemText
+                                                                                primary={<span className="font-medium text-gray-900">{exp.title}</span>}
+                                                                                secondary={<span className="text-sm text-gray-500">{exp.company}</span>}
+                                                                            />
+                                                                        </ListItem>
+                                                                    ))}
+                                                                </List>
+
+                                                            </div>
+
+                                                            {/* Detail Card */}
+                                                            <div className="w-full md:w-2/3">
+                                                                <Card className="p-6 shadow-sm rounded-xl bg-white space-y-4">
+                                                                    <Typography variant="h6" className="text-blue-700 font-semibold">
+                                                                        {selectedExp.title}
+                                                                    </Typography>
+                                                                    <Typography variant="subtitle1" className="text-gray-600">
+                                                                        {selectedExp.company} — {selectedExp.posotion}
+                                                                    </Typography>
+                                                                    <Typography variant="body2" className="text-gray-500">
+                                                                        Location: {selectedExp.location}
+                                                                    </Typography>
+                                                                    <Typography variant="body2" className="text-gray-500">
+                                                                        Duration: {new Date(selectedExp.startDate).toLocaleDateString()} -{' '}
+                                                                        {new Date(selectedExp.endDate).toLocaleDateString()} ({selectedExp.duration} months)
+                                                                    </Typography>
+                                                                    <Typography variant="body2" className="text-gray-700">
+                                                                        {selectedExp.description}
+                                                                    </Typography>
+                                                                </Card>
+                                                            </div>
+                                                        </div>
+                                                        <Divider/>
+                                                        <CreateExperienceForm userId={selectedUser.value}/>
                                                     </TabPanel>
                                                 </Tabs>
                                             )

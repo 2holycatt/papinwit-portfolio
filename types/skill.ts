@@ -3,11 +3,11 @@ export type SkillPlain = {
     user: string;
     abbreviation: string;
     careerCategory: string;
-    Languague?: string[];
-    Framework?: string[];
-    CloudDB?: string[];
-    Tool?: string[];
-    Other?: string[];
+    language?: string[];
+    framework?: string[];
+    cloudDB?: string[];
+    tool?: string[];
+    other?: string[];
     note?: string;
     createdAt?: string;
     updatedAt?: string;

@@ -4,7 +4,7 @@ export interface IExperience extends Document {
     user: mongoose.Types.ObjectId;
     title: string;
     company: string;   
-    posotion: string;
+    position: string;
     location: string;
     startDate: Date;
     endDate: Date;
@@ -19,7 +19,7 @@ const experienceSchema: Schema<IExperience> = new Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     title: String,
     company: String,
-    posotion: String,
+    position: String,
     location: String,
     startDate: Date,
     endDate: Date,
